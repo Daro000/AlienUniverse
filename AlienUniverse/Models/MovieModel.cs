@@ -9,7 +9,7 @@ public class MovieModel
     public string Script {get; set; }
     public string Genre { get; set; }
     public string TimeLength { get; set; }
-    public string Rating { get; set; }
+    public double Rating { get; set; }
     public string MainCharacters { get; set; }
     public string Ship {get; set; }
     public string Description {get; set; }

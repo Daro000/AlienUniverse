@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Reactive;
 using AlienUniverse.Models;
 using ReactiveUI;
 
@@ -19,7 +20,7 @@ public class MainWindowViewModel : ViewModelBase
             Script = "Dan O’Bannon",
             Genre = "Sci-Fi / Horror",
             TimeLength = "117 minut",
-            Rating = "8.5 / 10",
+            Rating = 8.5,
             MainCharacters = "Ellen Ripley, Dallas, Ash, Lambert, Kane",
             Ship = "USCSS Nostromo",
             Description =
@@ -37,7 +38,7 @@ public class MainWindowViewModel : ViewModelBase
             Script = "James Cameron, David Giler, Walter Hill",
             Genre = "Sci-Fi / Akcja / Horror",
             TimeLength = "137 minut",
-            Rating = "8.4 / 10",
+            Rating = 8.4,
             MainCharacters = "Ellen Ripley, Hicks, Newt, Bishop, Vasquez",
             Ship = "USS Sulaco",
             Description =
@@ -55,7 +56,7 @@ public class MainWindowViewModel : ViewModelBase
             Script = "David Giler, Walter Hill, Larry Ferguson",
             Genre = "Sci-Fi / Horror",
             TimeLength = "114 minut",
-            Rating = "6.5 / 10",
+            Rating = 6.5,
             MainCharacters = "Ellen Ripley, Dillon, Clemens, Morse, Andrews",
             Ship = "E.E.V. z USS Sulaco (katastrofa)",
             Description =
@@ -73,7 +74,7 @@ public class MainWindowViewModel : ViewModelBase
             Script = "Joss Whedon",
             Genre = "Sci-Fi / Horror",
             TimeLength = "109 minut",
-            Rating = "6.2 / 10",
+            Rating = 6.2,
             MainCharacters = "Ellen Ripley (klon), Call, Johner, Christie, Dr. Gediman",
             Ship = "USM Auriga",
             Description =
@@ -91,7 +92,7 @@ public class MainWindowViewModel : ViewModelBase
             Script = "Jon Spaihts, Damon Lindelof",
             Genre = "Sci-Fi / Thriller",
             TimeLength = "124 minuty",
-            Rating = "7.0 / 10",
+            Rating = 7.0,
             MainCharacters = "Elizabeth Shaw, David, Charlie Holloway, Meredith Vickers",
             Ship = "USCSS Prometheus",
             Description =
@@ -109,7 +110,7 @@ public class MainWindowViewModel : ViewModelBase
             Script = "John Logan, Dante Harper",
             Genre = "Sci-Fi / Horror",
             TimeLength = "122 minuty",
-            Rating = "6.4 / 10",
+            Rating = 6.4,
             MainCharacters = "Daniels, David, Walter, Oram, Tennessee",
             Ship = "USCSS Covenant",
             Description =
@@ -127,6 +128,9 @@ public class MainWindowViewModel : ViewModelBase
         get => _selectedMovie;
         set => this.RaiseAndSetIfChanged(ref _selectedMovie, value);
     }
+    
+    
+    
 
 
 

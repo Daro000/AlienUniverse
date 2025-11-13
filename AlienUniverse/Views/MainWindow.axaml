@@ -23,10 +23,38 @@
                      Height="200">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel></StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBlock Text="{Binding Title}"/>
+                            <TextBlock Text="("/>
+                            <TextBlock Text="{Binding ReleaseDate}"/>
+                            <TextBlock Text=")"/>
+                        </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            
+            <StackPanel Grid.Column="1" Grid.Row="0" Margin="10" Spacing="10">
+                <TextBlock Text="Szczegóły: " FontWeight="Bold"
+                           Foreground="Brown" FontSize="20"/>
+                <TextBlock Text="{Binding SelectedMovie.Title}"/>
+                <TextBlock Text="{Binding SelectedMovie.TitleP}"/>
+                <TextBlock Text="{Binding SelectedMovie.ReleaseDate}"/>
+                <TextBlock Text="{Binding SelectedMovie.Director}"/>
+                <TextBlock Text="{Binding SelectedMovie.Script}"/>
+                <TextBlock Text="{Binding SelectedMovie.Genre}"/>
+                <TextBlock Text="{Binding SelectedMovie.TimeLength}"/>
+                <TextBlock Text="{Binding SelectedMovie.Rating}"/>
+                <TextBlock Text="{Binding SelectedMovie.MainCharacters}"/>
+                <TextBlock Text="{Binding SelectedMovie.Ship}"/>
+                <TextBlock Text="{Binding SelectedMovie.Description}" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding SelectedMovie.FunFacts}" TextWrapping="Wrap"/>
+                <TextBlock Text="Ocena "/>
+                <ProgressBar Minimum="0" Maximum="10"
+                             Value="{Binding SelectedMovie.Rating}"
+                             Height="20"
+                             Foreground="Brown"/>
+                
+            </StackPanel>
         </Grid>
     </StackPanel>
 
