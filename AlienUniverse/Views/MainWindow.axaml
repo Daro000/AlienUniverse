@@ -38,6 +38,9 @@
             <StackPanel Orientation="Horizontal" Spacing="10">
                 <Button Content="Usuń film" Command="{Binding RemoveMovieCommand}" 
                         IsEnabled="{Binding SelectedMovie}" />
+                <Button Content="Pokaż postacie"
+                        Command="{Binding ShowCharactersCommand}"
+                        IsEnabled="{Binding SelectedMovie}" />
             </StackPanel>
 
 

@@ -1,17 +1,21 @@
 ﻿using System.Collections.ObjectModel;
 using System.Reactive;
+using System.Linq;
 using AlienUniverse.Models;
 using ReactiveUI;
+using AlienUniverse.Views;
 
-namespace AlienUniverse.ViewModels;
-
-public class MainWindowViewModel : ViewModelBase
+namespace AlienUniverse.ViewModels
 {
-    public ReactiveCommand<Unit, Unit> AddNewMovieCommand { get; }
-    public ObservableCollection<MovieModel> Movies { get; set; } = new()
+    public class MainWindowViewModel : ViewModelBase
     {
+        public ReactiveCommand<Unit, Unit> AddNewMovieCommand { get; }
+        public ReactiveCommand<Unit, Unit> RemoveMovieCommand { get; }
+        public ReactiveCommand<Unit, Unit> ShowCharactersCommand { get; }
 
-        new MovieModel()
+        public ObservableCollection<MovieModel> Movies { get; set; } = new()
+        {
+             new MovieModel()
         {
             Title = "Alien",
             TitleP = "Obcy – ósmy pasażer Nostromo",
@@ -118,57 +122,59 @@ public class MainWindowViewModel : ViewModelBase
             FunFacts =
                 "Film pierwotnie miał być zatytułowany „Paradise Lost”, a reżyser planował jeszcze jedną część łączącą fabułę z oryginalnym „Obcym” z 1979 roku."
         }
+        };
 
-    };
-    
-    
-    private MovieModel _selectedMovie;
-    public MovieModel SelectedMovie {
-        
-        get => _selectedMovie;
-        set => this.RaiseAndSetIfChanged(ref _selectedMovie, value);
-    }
-    
-    
-
-    public ReactiveCommand<Unit, Unit> AddMovieCommand { get; }
-    public ReactiveCommand<Unit, Unit> RemoveMovieCommand { get; }
-
-    public MainWindowViewModel()
-    {
-     
-        
-        
-        RemoveMovieCommand = ReactiveCommand.Create(RemoveMovie);
-        
-        AddNewMovieCommand = ReactiveCommand.Create(() =>
+        private MovieModel _selectedMovie;
+        public MovieModel SelectedMovie
         {
-            Movies.Add(NewMovie);          
-            SelectedMovie = NewMovie;      
-            NewMovie = new MovieModel();   
-        });
-        
-    }
-    
-    
-    private void RemoveMovie()
-    {
-        if (SelectedMovie != null)
+            get => _selectedMovie;
+            set => this.RaiseAndSetIfChanged(ref _selectedMovie, value);
+        }
+
+        private MovieModel _newMovie = new MovieModel();
+        public MovieModel NewMovie
         {
-            Movies.Remove(SelectedMovie);  
-            SelectedMovie = null;         
+            get => _newMovie;
+            set => this.RaiseAndSetIfChanged(ref _newMovie, value);
+        }
+
+        public MainWindowViewModel()
+        {
+            RemoveMovieCommand = ReactiveCommand.Create(RemoveMovie);
+
+            AddNewMovieCommand = ReactiveCommand.Create(() =>
+            {
+                Movies.Add(NewMovie);
+                SelectedMovie = NewMovie;
+                NewMovie = new MovieModel();
+            });
+
+            ShowCharactersCommand = ReactiveCommand.Create(ShowCharacters);
+        }
+
+        private void RemoveMovie()
+        {
+            if (SelectedMovie != null)
+            {
+                Movies.Remove(SelectedMovie);
+                SelectedMovie = null;
+            }
+        }
+
+        private void ShowCharacters()
+        {
+            if (SelectedMovie != null && !string.IsNullOrEmpty(SelectedMovie.MainCharacters))
+            {
+                var characters = SelectedMovie.MainCharacters.Split(',')
+                    .Select(c => c.Trim())
+                    .ToList();
+
+                var window = new CharactersWindow
+                {
+                    DataContext = new CharactersViewModel(characters)
+                };
+                window.Show();
+            }
         }
     }
-    
-    
-    private MovieModel _newMovie = new MovieModel();
-    public MovieModel NewMovie
-    {
-        get => _newMovie;
-        set => this.RaiseAndSetIfChanged(ref _newMovie, value);
-    }
-    
-    
-
-
 }

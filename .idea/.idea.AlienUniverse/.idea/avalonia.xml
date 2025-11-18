@@ -3,6 +3,7 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
+        <entry key="AlienUniverse/CharactersWindow.axaml" value="AlienUniverse/AlienUniverse.csproj" />
         <entry key="AlienUniverse/Views/MainWindow.axaml" value="AlienUniverse/AlienUniverse.csproj" />
       </map>
     </option>
