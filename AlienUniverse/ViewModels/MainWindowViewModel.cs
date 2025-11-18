@@ -7,9 +7,9 @@ namespace AlienUniverse.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
+    public ReactiveCommand<Unit, Unit> AddNewMovieCommand { get; }
     public ObservableCollection<MovieModel> Movies { get; set; } = new()
     {
-
 
         new MovieModel()
         {
@@ -130,8 +130,45 @@ public class MainWindowViewModel : ViewModelBase
     }
     
     
-    
 
+    public ReactiveCommand<Unit, Unit> AddMovieCommand { get; }
+    public ReactiveCommand<Unit, Unit> RemoveMovieCommand { get; }
+
+    public MainWindowViewModel()
+    {
+     
+        
+        
+        RemoveMovieCommand = ReactiveCommand.Create(RemoveMovie);
+        
+        AddNewMovieCommand = ReactiveCommand.Create(() =>
+        {
+            Movies.Add(NewMovie);          
+            SelectedMovie = NewMovie;      
+            NewMovie = new MovieModel();   
+        });
+        
+    }
+    
+    
+    private void RemoveMovie()
+    {
+        if (SelectedMovie != null)
+        {
+            Movies.Remove(SelectedMovie);  
+            SelectedMovie = null;         
+        }
+    }
+    
+    
+    private MovieModel _newMovie = new MovieModel();
+    public MovieModel NewMovie
+    {
+        get => _newMovie;
+        set => this.RaiseAndSetIfChanged(ref _newMovie, value);
+    }
+    
+    
 
 
 }

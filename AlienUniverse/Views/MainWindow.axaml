@@ -3,21 +3,22 @@
         xmlns:vm="using:AlienUniverse.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="500"
         x:Class="AlienUniverse.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="AlienUniverse">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-    
-    <StackPanel Margin="20" Spacing="20" Orientation="Vertical">
-        <TextBlock Text="Lista Filmów" FontSize="20"></TextBlock>
-        <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto" >
+
+    <Grid Margin="20" ColumnDefinitions="*,2*" RowDefinitions="*">
+        
+
+        <StackPanel Grid.Column="0" Spacing="10">
+            <TextBlock Text="Lista Filmów" FontSize="20"/>
+
             <ListBox ItemsSource="{Binding Movies}"
                      SelectedItem="{Binding SelectedMovie}"
                      Height="200">
@@ -32,10 +33,40 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            
-            <StackPanel Grid.Column="1" Grid.Row="0" Margin="10" Spacing="10">
-                <TextBlock Text="Szczegóły: " FontWeight="Bold"
-                           Foreground="Brown" FontSize="20"/>
+
+
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <Button Content="Usuń film" Command="{Binding RemoveMovieCommand}" 
+                        IsEnabled="{Binding SelectedMovie}" />
+            </StackPanel>
+
+
+            <ScrollViewer Height="200" VerticalScrollBarVisibility="Auto">
+                <StackPanel Spacing="5" Margin="0,10,0,0">
+                    <TextBlock Text="Dodaj nowy film:" FontWeight="Bold" FontSize="16"/>
+
+                    <TextBox Watermark="Tytuł" Text="{Binding NewMovie.Title, Mode=TwoWay}" />
+                    <TextBox Watermark="Tytuł alternatywny" Text="{Binding NewMovie.TitleP, Mode=TwoWay}" />
+                    <TextBox Watermark="Rok wydania" Text="{Binding NewMovie.ReleaseDate, Mode=TwoWay}" />
+                    <TextBox Watermark="Reżyser" Text="{Binding NewMovie.Director, Mode=TwoWay}" />
+                    <TextBox Watermark="Scenariusz" Text="{Binding NewMovie.Script, Mode=TwoWay}" />
+                    <TextBox Watermark="Gatunek" Text="{Binding NewMovie.Genre, Mode=TwoWay}" />
+                    <TextBox Watermark="Czas trwania" Text="{Binding NewMovie.TimeLength, Mode=TwoWay}" />
+                    <TextBox Watermark="Postacie główne" Text="{Binding NewMovie.MainCharacters, Mode=TwoWay}" />
+                    <TextBox Watermark="Statek" Text="{Binding NewMovie.Ship, Mode=TwoWay}" />
+                    <TextBox Watermark="Opis" Text="{Binding NewMovie.Description, Mode=TwoWay}" AcceptsReturn="True" Height="60"/>
+                    <TextBox Watermark="Ciekawostki" Text="{Binding NewMovie.FunFacts, Mode=TwoWay}" AcceptsReturn="True" Height="60"/>
+                    <TextBox Watermark="Ocena (0-10)" Text="{Binding NewMovie.Rating, Mode=TwoWay}"/>
+
+                    <Button Content="Dodaj nowy film" Command="{Binding AddNewMovieCommand}" Margin="0,5,0,0"/>
+                </StackPanel>
+            </ScrollViewer>
+        </StackPanel>
+
+
+        <ScrollViewer Grid.Column="1" Margin="10" VerticalScrollBarVisibility="Auto">
+            <StackPanel Spacing="10">
+                <TextBlock Text="Szczegóły filmu:" FontWeight="Bold" Foreground="Brown" FontSize="20"/>
                 <TextBlock Text="{Binding SelectedMovie.Title}"/>
                 <TextBlock Text="{Binding SelectedMovie.TitleP}"/>
                 <TextBlock Text="{Binding SelectedMovie.ReleaseDate}"/>
@@ -48,14 +79,13 @@
                 <TextBlock Text="{Binding SelectedMovie.Ship}"/>
                 <TextBlock Text="{Binding SelectedMovie.Description}" TextWrapping="Wrap"/>
                 <TextBlock Text="{Binding SelectedMovie.FunFacts}" TextWrapping="Wrap"/>
-                <TextBlock Text="Ocena "/>
+                <TextBlock Text="Ocena"/>
                 <ProgressBar Minimum="0" Maximum="10"
                              Value="{Binding SelectedMovie.Rating}"
                              Height="20"
                              Foreground="Brown"/>
-                
             </StackPanel>
-        </Grid>
-    </StackPanel>
+        </ScrollViewer>
 
+    </Grid>
 </Window>
